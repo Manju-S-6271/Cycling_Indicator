@@ -1,5 +1,3 @@
-blink = 0
-reset_flag = 0
 def Turn_Right():
     basic.clear_screen()
     for index in range(4):
@@ -18,6 +16,14 @@ input.on_button_pressed(Button.A, on_button_pressed_a)
 
 def on_gesture_logo_up():
     global reset_flag, blink
+    music.play(music.tone_playable(800, music.beat(BeatFraction.EIGHTH)),
+        music.PlaybackMode.UNTIL_DONE)
+    music.rest(music.beat(BeatFraction.SIXTEENTH))
+    music.play(music.tone_playable(600, music.beat(BeatFraction.EIGHTH)),
+        music.PlaybackMode.UNTIL_DONE)
+    music.rest(music.beat(BeatFraction.SIXTEENTH))
+    music.play(music.tone_playable(800, music.beat(BeatFraction.EIGHTH)),
+        music.PlaybackMode.IN_BACKGROUND)
     reset_flag = 1
     blink = 1
     while not (input.is_gesture(Gesture.SCREEN_UP)):
@@ -60,6 +66,14 @@ def Turn_Right_Anime():
 
 def on_gesture_tilt_right():
     global reset_flag, blink
+    music.play(music.tone_playable(600, music.beat(BeatFraction.EIGHTH)),
+        music.PlaybackMode.UNTIL_DONE)
+    music.rest(music.beat(BeatFraction.SIXTEENTH))
+    music.play(music.tone_playable(800, music.beat(BeatFraction.EIGHTH)),
+        music.PlaybackMode.UNTIL_DONE)
+    music.rest(music.beat(BeatFraction.SIXTEENTH))
+    music.play(music.tone_playable(800, music.beat(BeatFraction.EIGHTH)),
+        music.PlaybackMode.IN_BACKGROUND)
     reset_flag = 1
     blink = 1
     while not (input.is_gesture(Gesture.SCREEN_UP)):
@@ -82,25 +96,28 @@ def Toggle_all_of_column(column: number, WithPause: bool):
     for i in range(5):
         led.toggle(column, i)
     if WithPause:
-        basic.pause(100)
+        basic.pause(50)
 def Toggle_all_of_row(Row: number, WithPause2: bool):
     for j in range(5):
         led.toggle(j, Row)
     if WithPause2:
         basic.pause(50)
+reset_flag = 0
+blink = 0
+pins.set_audio_pin_enabled(False)
+music.play(music.tone_playable(600, music.beat(BeatFraction.EIGHTH)),
+    music.PlaybackMode.UNTIL_DONE)
+music.play(music.tone_playable(800, music.beat(BeatFraction.EIGHTH)),
+    music.PlaybackMode.IN_BACKGROUND)
 
 def on_every_interval():
     pass
 loops.every_interval(500, on_every_interval)
 
 def on_forever():
-    pass
-basic.forever(on_forever)
-
-def on_forever2():
     if blink:
         pins.digital_write_pin(DigitalPin.P1, 1)
         basic.pause(300)
         pins.digital_write_pin(DigitalPin.P1, 0)
         basic.pause(300)
-basic.forever(on_forever2)
+basic.forever(on_forever)

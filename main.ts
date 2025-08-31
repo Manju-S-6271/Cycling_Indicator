@@ -1,5 +1,3 @@
-let blink = 0
-let reset_flag = 0
 function Turn_Right() {
     basic.clearScreen()
     for (let index = 0; index < 4; index++) {
@@ -20,6 +18,11 @@ input.onButtonPressed(Button.A, function on_button_pressed_a() {
 })
 input.onGesture(Gesture.LogoUp, function on_gesture_logo_up() {
     
+    music.play(music.tonePlayable(800, music.beat(BeatFraction.Eighth)), music.PlaybackMode.UntilDone)
+    music.rest(music.beat(BeatFraction.Sixteenth))
+    music.play(music.tonePlayable(600, music.beat(BeatFraction.Eighth)), music.PlaybackMode.UntilDone)
+    music.rest(music.beat(BeatFraction.Sixteenth))
+    music.play(music.tonePlayable(800, music.beat(BeatFraction.Eighth)), music.PlaybackMode.InBackground)
     reset_flag = 1
     blink = 1
     while (!input.isGesture(Gesture.ScreenUp)) {
@@ -66,6 +69,11 @@ function Turn_Right_Anime() {
 
 input.onGesture(Gesture.TiltRight, function on_gesture_tilt_right() {
     
+    music.play(music.tonePlayable(600, music.beat(BeatFraction.Eighth)), music.PlaybackMode.UntilDone)
+    music.rest(music.beat(BeatFraction.Sixteenth))
+    music.play(music.tonePlayable(800, music.beat(BeatFraction.Eighth)), music.PlaybackMode.UntilDone)
+    music.rest(music.beat(BeatFraction.Sixteenth))
+    music.play(music.tonePlayable(800, music.beat(BeatFraction.Eighth)), music.PlaybackMode.InBackground)
     reset_flag = 1
     blink = 1
     while (!input.isGesture(Gesture.ScreenUp)) {
@@ -93,7 +101,7 @@ function Toggle_all_of_column(column: number, WithPause: boolean) {
         led.toggle(column, i)
     }
     if (WithPause) {
-        basic.pause(100)
+        basic.pause(50)
     }
     
 }
@@ -108,13 +116,15 @@ function Toggle_all_of_row(Row: number, WithPause2: boolean) {
     
 }
 
+let reset_flag = 0
+let blink = 0
+pins.setAudioPinEnabled(false)
+music.play(music.tonePlayable(600, music.beat(BeatFraction.Eighth)), music.PlaybackMode.UntilDone)
+music.play(music.tonePlayable(800, music.beat(BeatFraction.Eighth)), music.PlaybackMode.InBackground)
 loops.everyInterval(500, function on_every_interval() {
     
 })
 basic.forever(function on_forever() {
-    
-})
-basic.forever(function on_forever2() {
     if (blink) {
         pins.digitalWritePin(DigitalPin.P1, 1)
         basic.pause(300)
