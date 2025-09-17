@@ -15,6 +15,7 @@ input.onButtonPressed(Button.A, function on_button_pressed_a() {
     
     basic.clearScreen()
     blink = 0
+    control.reset()
 })
 input.onGesture(Gesture.LogoUp, function on_gesture_logo_up() {
     
@@ -121,9 +122,6 @@ let blink = 0
 pins.setAudioPinEnabled(false)
 music.play(music.tonePlayable(600, music.beat(BeatFraction.Eighth)), music.PlaybackMode.UntilDone)
 music.play(music.tonePlayable(800, music.beat(BeatFraction.Eighth)), music.PlaybackMode.InBackground)
-loops.everyInterval(500, function on_every_interval() {
-    
-})
 basic.forever(function on_forever() {
     if (blink) {
         pins.digitalWritePin(DigitalPin.P1, 1)

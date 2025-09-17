@@ -12,6 +12,7 @@ def on_button_pressed_a():
     global blink
     basic.clear_screen()
     blink = 0
+    control.reset()
 input.on_button_pressed(Button.A, on_button_pressed_a)
 
 def on_gesture_logo_up():
@@ -109,10 +110,6 @@ music.play(music.tone_playable(600, music.beat(BeatFraction.EIGHTH)),
     music.PlaybackMode.UNTIL_DONE)
 music.play(music.tone_playable(800, music.beat(BeatFraction.EIGHTH)),
     music.PlaybackMode.IN_BACKGROUND)
-
-def on_every_interval():
-    pass
-loops.every_interval(500, on_every_interval)
 
 def on_forever():
     if blink:
